@@ -4,30 +4,22 @@ pipeline {
         DOCKERHUB_CREDENTIALS=credentials('DockerhubCreds')
     }
     
-    
     stages {
-//         stage("create dockerfile") {
-//             steps {
-//                 sh """
-//                 tee Dockerfile <<-'EOF'
-//                 FROM ubuntu:latest
-//                 RUN touch file-01.txt
-// EOF
-//                 """
-//             }
-//         }
-        
         stage("build docker") {
             steps {
                 sh "pwd"
                 sh "whoami"
                 sh "docker build -t shayben/webapp:latest ."
-//                docker.build("shayben/shay-test:latest")
             }
         }
         stage("verify dockers") {
             steps {
                 sh "docker images"
+            }
+        }
+         stage("promote image") {
+            steps {
+                sh "docker build -t shayben/webapp:verified ."
             }
         }
         stage("login") {
@@ -37,7 +29,7 @@ pipeline {
         }
         stage("push") {
             steps {
-                sh 'docker push shayben/webapp:latest'
+                sh 'docker push shayben/webapp:verified'
             }
         }
     }
