@@ -6,20 +6,22 @@ pipeline {
     
     
     stages {
-        stage("create dockerfile") {
-            steps {
-                sh """
-                tee Dockerfile <<-'EOF'
-                FROM ubuntu:latest
-                RUN touch file-01.txt
-EOF
-                """
-            }
-        }
+//         stage("create dockerfile") {
+//             steps {
+//                 sh """
+//                 tee Dockerfile <<-'EOF'
+//                 FROM ubuntu:latest
+//                 RUN touch file-01.txt
+// EOF
+//                 """
+//             }
+//         }
         
         stage("build docker") {
             steps {
-                sh "docker build -t shayben/shay-test:latest ."
+                sh "pwd"
+                sh "whoami"
+                sh "docker build -t shayben/webapp:latest ."
 //                docker.build("shayben/shay-test:latest")
             }
         }
@@ -35,7 +37,7 @@ EOF
         }
         stage("push") {
             steps {
-                sh 'docker push shayben/shay-test:latest'
+                sh 'docker push shayben/webapp:latest'
             }
         }
     }
@@ -45,3 +47,4 @@ EOF
         }
     }
 }
+
