@@ -32,6 +32,11 @@ pipeline {
                 sh 'docker push shayben/webapp:verified'
             }
         }
+        stage("deploy") {
+            steps {
+                //sh 'ansible-playbook -i deploy-app.yaml' // Playbook configured in the ansible repository
+            }
+        }
     }
     post {
         always {
